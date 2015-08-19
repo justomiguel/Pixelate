@@ -126,7 +126,6 @@ public class Pixelate extends ImageView {
             }
         }
 
-        long endTime = System.currentTimeMillis();
         render = false;
     }
 }

@@ -12,7 +12,7 @@ Use the Pixelate imageview in your layout XML.
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/walter"/>
+        android:src="your image.."/>
 ```
 
 Call the pixelate method on the view to render the pixels with the preferred density

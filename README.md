@@ -1,6 +1,26 @@
 # Pixelate
 Android library to pixelate images
 
+## Usage
+
+Use the Pixelate imageview in your layout XML.
+
+```XML
+<nl.dionsegijn.pixelate
+        android:id="@+id/pixelate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/walter"/>
+```
+
+Call the pixelate method on the view to render the pixels with the preferred density
+```Java
+pixelate.pixelate(10);
+```
+
+
 Download
 --------
 

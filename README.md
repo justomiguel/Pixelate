@@ -1,5 +1,5 @@
 # Pixelate
-For a project I needed to turn images into a pixelized version of itself. However I couldn't find a library for android available to use so I decided to write something myself. Please don't expect it to be perfect but I still wanted to throw it on github for someone who could end up in the same situation as me. Any tips or contributions are welcome!
+For a project I needed to turn images into a pixelized version of itself. However I couldn't find a library for android available to use so I decided to write something myself. Please don't expect it to be perfect but I still wanted to put it on github for someone who could end up in the same situation as me. Any tips or contributions are welcome!
 
 ## Usage
 

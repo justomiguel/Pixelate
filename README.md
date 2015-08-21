@@ -3,7 +3,7 @@ For a project I needed to turn images into a pixelized version of itself. Howeve
 
 ![alt text](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration.png "Pixelate")
 
-_Heisenberg painting created byarman domesias_
+_Heisenberg painting created by Armando Mesias_
 
 ## Usage
 

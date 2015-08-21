@@ -17,9 +17,14 @@ Use the Pixelate imageview in your layout XML.
 
 Call the pixelate method on the view to render the pixels with the preferred density
 ```Java
-pixelate.pixelate(10);
+pixelate.pixelate(int density);
+```
+Or call the following method to pixelate a certain area of the image
+```Java
+pixelate.pixelateArea(int x, int y, int size, int density);
 ```
 
+![alt text](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration.png "Pixelate")
 
 Download
 --------

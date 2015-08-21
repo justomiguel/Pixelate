@@ -12,16 +12,22 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * Created by Dion Segijn on 16/08/15.
+ * Created by Dion Segijn (danielmartinus) on 16/08/15.
  */
 public class Pixelate extends ImageView {
 
-    private int cols;
     private boolean clearCanvas = false;
-    /* Initialize Paint object once */
-    private Paint paint = new Paint();
-    public Bitmap drawingCache;
+    private boolean isTouched = false;
     private boolean render = false;
+
+    private int cols;
+    public Bitmap drawingCache;
+    private Paint paint = new Paint();
+
+    /* Properties for drawing just a certain area on the canvas */
+    private int touchedX;
+    private int touchedY;
+    private int touchedSize;
 
     public Pixelate(Context context) {
         super(context);
@@ -53,7 +59,18 @@ public class Pixelate extends ImageView {
             clearCanvas = false;
             return;
         }
+
+        if(isTouched) {
+            renderPixels(canvas);
+            isTouched = false;
+            return;
+        }
         renderPixels(canvas);
+    }
+
+    public void clear() {
+        clearCanvas = true;
+        invalidate();
     }
 
     public void pixelate(int cols) {
@@ -62,18 +79,17 @@ public class Pixelate extends ImageView {
         this.invalidate();
     }
 
-    public void clear() {
-        clearCanvas = true;
-        invalidate();
+    public void pixelateArea(int x, int y, int size, int density) {
+        cols = density;
+        touchedX = x;
+        touchedY = y;
+        touchedSize = size;
+        isTouched = true;
+        this.invalidate();
     }
 
-    /* Geef de aantal kolommen en rijen
-       Bereken de size van elk vierkant
-       Bereken de midden positie (xy) van elk vierkant
-       Pak de pixel kleur van de xy positie (bitmap)
-       Draw op canvas de grote van elk vierkant op de juiste x en y positie */
     private void renderPixels(Canvas canvas) {
-        if(!render) return;
+        if(!render && !isTouched) return;
         if(cols < 1) cols = 1;
 
         Bitmap bitmap = null;
@@ -91,16 +107,25 @@ public class Pixelate extends ImageView {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
-        // Width for each block
-        int rectW = width / cols;
-        int rectH = rectW;
-        double rows = Math.round((double)height / (double)rectH);
+        int blockSize = 0;
+        int startX = 0;
+        int startY = 0;
+        double rows = 0;
+        if(isTouched) {
+            blockSize = touchedSize / cols;
+            startX = touchedX - (touchedSize / 2);
+            startY = touchedY - (touchedSize / 2);
+            rows = Math.round((double)touchedSize / (double)blockSize);
+        } else {
+            blockSize = width / cols;
+            rows = Math.round((double)height / (double)blockSize);
+        }
 
         for (int row = 0; row < rows; row++ ) {
 
             for (int col = 0; col < cols; col++ ) {
-                int midY = (rectH) * row + (rectH / 2);
-                int midX = (rectW) * col + (rectW / 2);
+                int midY = (blockSize) * row + (blockSize / 2) + startY;
+                int midX = (blockSize) * col + (blockSize / 2) + startX; // for example: (150 * 2) + 75 = 225
 
                 if(midX > width) return;
                 if(midY > height) return;
@@ -108,7 +133,7 @@ public class Pixelate extends ImageView {
                 int pixel = 0;
                 try {
                     pixel = bitmap.getPixel(midX, midY);
-                } catch(Exception ex) { return; }
+                } catch(Exception ex) {return;}
 
                 int r = Color.red(pixel);
                 int b = Color.blue(pixel);
@@ -117,15 +142,16 @@ public class Pixelate extends ImageView {
 
                 paint.setARGB(a, r, g, b);
 
-                int left = (rectH * row);
-                int top = (rectW * col);
-                int right = ((rectH * row) + rectH);
-                int bottom = ((rectW * col) + rectW);
+                int left = (blockSize * row) + startY;
+                int top = (blockSize * col) + startX;
+                int right = ((blockSize * row) + blockSize) + startY;
+                int bottom = ((blockSize * col) + blockSize) + startX;
 
                 canvas.drawRect(top, left, bottom, right, paint);
             }
         }
 
+        isTouched = false;
         render = false;
     }
 }

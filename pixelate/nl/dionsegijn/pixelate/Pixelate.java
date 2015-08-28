@@ -2,6 +2,7 @@ package nl.dionsegijn.pixelate;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,17 +38,30 @@ public class Pixelate extends ImageView {
     public Pixelate(Context context, AttributeSet attrs) {
         super(context, attrs);
         setDrawingCacheEnabled(true);
+        readAttribute(context, attrs);
     }
 
     public Pixelate(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setDrawingCacheEnabled(true);
+        readAttribute(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Pixelate(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setDrawingCacheEnabled(true);
+        readAttribute(context, attrs);
+    }
+
+    private void readAttribute(Context context, AttributeSet attrs) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.Pixelate,
+                0, 0);
+        int density = a.getInteger(R.styleable.Pixelate_density, 0);
+        a.recycle();
+        pixelate(density);
     }
 
     @Override

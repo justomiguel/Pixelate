@@ -34,7 +34,6 @@ Or call the following method to pixelate a certain area of the image
 ```Java
 pixelate.pixelateArea(int x, int y, int size, int density);
 ```
-![illustration](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration_area.png "Pixelate")
 
 
 Download

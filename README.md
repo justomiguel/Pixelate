@@ -1,7 +1,7 @@
 # Pixelate
 For a project I needed to turn images into a pixelized version of itself. However I couldn't find a library for android available to use so I decided to write something myself. Please don't expect it to be perfect but I still wanted to put it on github for someone who could end up in the same situation as me. Any tips or contributions are welcome!
 
-![alt text](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration.png "Pixelate")
+![illustration](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration.png "Pixelate")
 
 _Heisenberg painting created by Armando Mesias_
 
@@ -18,15 +18,24 @@ Use the Pixelate imageview in your layout XML.
         android:scaleType="centerCrop"
         android:src="your image.."/>
 ```
+**Optional:** Add the following attribute to the layout to pixelate an image immediately
+
+```XML
+pixelate:density="10"
+```
+
 
 Call the pixelate method on the view to render the pixels with the preferred density
 ```Java
+Pixelate pixelate = (Pixelate)findViewById(R.id.pixelate);
 pixelate.pixelate(int density);
 ```
 Or call the following method to pixelate a certain area of the image
 ```Java
 pixelate.pixelateArea(int x, int y, int size, int density);
 ```
+![illustration](https://github.com/DanielMartinus/Pixelate/blob/master/images/pixelate_illustration_area.png "Pixelate")
+
 
 Download
 --------

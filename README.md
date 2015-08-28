@@ -42,7 +42,7 @@ Download
 
 Download via Gradle:
 ```groovy
-compile 'nl.dionsegijn:pixelate:1.0.0'
+compile 'nl.dionsegijn:pixelate:1.0.1'
 ```
 
 License
